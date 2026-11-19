@@ -6,7 +6,8 @@ No code-level provider branching in tool modules.
 
 import os
 from dataclasses import dataclass, field
-from typing import Dict, Optional
+from typing import Any
+
 from dotenv import load_dotenv
 
 # Load environment variables once at module import
@@ -34,7 +35,7 @@ class Neo4jConfig:
     connection_acquisition_timeout: int = 60
 
     @property
-    def auth(self) -> tuple:
+    def auth(self) -> tuple[str, str]:
         """Return authentication tuple."""
         return (self.username, self.password)
 
@@ -131,7 +132,7 @@ class AppConfig:
         """Create full application configuration."""
         return cls()
 
-    def to_dict(self) -> Dict[str, Dict]:
+    def to_dict(self) -> dict[str, dict[str, Any]]:
         """Convert configuration to dictionary for health/logging."""
         return {
             "neo4j": {

@@ -8,9 +8,8 @@ Predefined YAML is the source of truth. The LLM (ADK agent) picks the
 datasource_id; it never invents schemas.
 """
 
-import os
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import yaml
 
@@ -22,8 +21,8 @@ _REQUIRED_KEYS = {"node_types", "relationship_types", "patterns", "description"}
 
 def load_schema(
     datasource_id: Any,
-    schemas_dir: Optional[str] = None,
-) -> Optional[Dict[str, Any]]:
+    schemas_dir: str | None | Path = None,
+) -> dict[str, Any] | None:
     """Load a predefined YAML schema by datasource_id.
 
     Args:
@@ -61,7 +60,7 @@ def load_schema(
     return result
 
 
-def list_schemas(schemas_dir: Optional[str] = None) -> List[Dict[str, Any]]:
+def list_schemas(schemas_dir: str | None | Path = None) -> list[dict[str, Any]]:
     """Discover all available predefined schemas.
 
     Args:
@@ -75,7 +74,7 @@ def list_schemas(schemas_dir: Optional[str] = None) -> List[Dict[str, Any]]:
     if not schemas_dir.is_dir():
         return []
 
-    schemas: List[Dict[str, Any]] = []
+    schemas: list[dict[str, Any]] = []
     for path in sorted(schemas_dir.glob("*.yaml")):
         schema = load_schema(path.stem, schemas_dir=str(schemas_dir))
         if schema is not None:
@@ -90,8 +89,8 @@ def list_schemas(schemas_dir: Optional[str] = None) -> List[Dict[str, Any]]:
 
 def build_pipeline_config(
     datasource_id: Any,
-    schemas_dir: Optional[str] = None,
-) -> Dict[str, Any]:
+    schemas_dir: str | None | Path = None,
+) -> dict[str, Any]:
     """Build a schema dict suitable for ``SimpleKGPipeline(schema=...)``.
 
     Args:

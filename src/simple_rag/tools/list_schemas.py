@@ -10,7 +10,6 @@ from fastmcp import FastMCP
 
 from simple_rag.schema_loader import list_schemas as _list_schemas
 
-
 # The MCP server instance is injected by the caller (mcp_server.py).
 _mcp_server: Optional[FastMCP] = None
 

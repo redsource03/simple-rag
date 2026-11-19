@@ -16,7 +16,7 @@ from simple_rag.graph.pipeline import _get_kg_pipeline
 from simple_rag.llm.factory import _get_embedder
 
 # Module-level Cypher query constant (not inline in function)
-CYPER_QUERY = """
+CYPHER_QUERY = """
 // 1. Get parent Document metadata
 OPTIONAL MATCH (node)-[:PART_OF]->(doc:Document)
 
@@ -118,16 +118,13 @@ async def search(
         safe_hops = _clamp_hops(max_hops)
 
         # Build the Cypher query with the clamped hop count
-        retrieval_query = CYPER_QUERY.format(safe_hops=safe_hops)
+        retrieval_query = CYPHER_QUERY.format(safe_hops=safe_hops)
 
         # Use datasource_id for schema-aware indexing if provided
         index_name = "chunk_index"
         if datasource_id is not None:
-            # Validate datasource exists via schema_loader
-            schema_config = _get_kg_pipeline(datasource_id)
-            # In future: switch index_name based on datasource schema
-            # For now, use the validated datasource_id as an identifier
-            # (schema validation prevents invalid datasource IDs)
+            # Validate datasource exists via schema_loader (no-op for now)
+            _get_kg_pipeline(datasource_id)  # noqa: F841
 
         # Create the retriever
         retriever = VectorCypherRetriever(

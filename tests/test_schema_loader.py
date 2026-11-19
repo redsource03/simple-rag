@@ -7,15 +7,11 @@ Covers:
 - Schema loader uses temp directory with test YAML files (no real filesystem dependency)
 """
 
-import os
 import tempfile
 from pathlib import Path
-from typing import Any
 
 import yaml
-
 from simple_rag import schema_loader
-
 
 # ---------------------------------------------------------------------------
 # Helpers

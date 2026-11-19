@@ -4,15 +4,13 @@ Creates ``SimpleKGPipeline`` instances using the schema loader,
 LLM factory, and graph driver.
 """
 
-from typing import Any, Optional
 
-from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 from neo4j_graphrag.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
+from neo4j_graphrag.experimental.pipeline.kg_builder import SimpleKGPipeline
 
-from simple_rag.graph.driver import _get_driver, _ensure_vector_index
-from simple_rag.llm.factory import _get_llm, _get_embedder
+from simple_rag.graph.driver import _ensure_vector_index, _get_driver
+from simple_rag.llm.factory import _get_embedder, _get_llm
 from simple_rag.schema_loader import build_pipeline_config
-
 
 # Default text splitter configuration
 _DEFAULT_CHUNK_SIZE = 2800

@@ -6,14 +6,10 @@ Covers:
 - Vector index creation uses mocked Neo4j driver (no real DB needed)
 """
 
-import threading
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, patch
 
-import pytest
-
-from simple_rag.graph import driver
 from simple_rag.config import Neo4jConfig
-
+from simple_rag.graph import driver
 
 # ---------------------------------------------------------------------------
 # _get_driver

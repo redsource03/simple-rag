@@ -11,8 +11,6 @@ Covers:
 import asyncio
 from unittest.mock import MagicMock, patch
 
-import pytest
-
 
 def _make_mock_search_response(items: list[dict]) -> MagicMock:
     """Create a mock search response with items."""
@@ -368,31 +366,31 @@ class TestSearchError:
 
 class TestCypherQueryConstant:
     def test_cypher_query_is_module_constant(self) -> None:
-        """CYPER_QUERY is defined at module level."""
+        """CYPHER_QUERY is defined at module level."""
         from simple_rag.tools import search as search_module
 
-        assert hasattr(search_module, "CYPER_QUERY")
+        assert hasattr(search_module, "CYPHER_QUERY")
 
     def test_cypher_query_contains_entity_traversal(self) -> None:
         """Cypher query contains Entity traversal pattern."""
         from simple_rag.tools import search as search_module
 
-        assert "Entity" in search_module.CYPER_QUERY
+        assert "Entity" in search_module.CYPHER_QUERY
 
     def test_cypher_query_contains_community(self) -> None:
         """Cypher query contains Community traversal."""
         from simple_rag.tools import search as search_module
 
-        assert "Community" in search_module.CYPER_QUERY
+        assert "Community" in search_module.CYPHER_QUERY
 
     def test_cypher_query_contains_chunk(self) -> None:
         """Cypher query contains Chunk traversal."""
         from simple_rag.tools import search as search_module
 
-        assert "Chunk" in search_module.CYPER_QUERY
+        assert "Chunk" in search_module.CYPHER_QUERY
 
     def test_cypher_query_contains_entity_types_filter(self) -> None:
         """Cypher query contains entity_types parameter filter."""
         from simple_rag.tools import search as search_module
 
-        assert "entity_types" in search_module.CYPER_QUERY
+        assert "entity_types" in search_module.CYPHER_QUERY

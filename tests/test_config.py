@@ -7,14 +7,14 @@ Covers:
 - ProviderConfig OpenAI vs Ollama selection logic
 """
 
-import os
+import pytest
+
 from simple_rag.config import (
     AppConfig,
     MCPConfig,
     Neo4jConfig,
     ProviderConfig,
 )
-
 
 # ---------------------------------------------------------------------------
 # Neo4jConfig

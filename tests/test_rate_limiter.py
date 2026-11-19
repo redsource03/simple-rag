@@ -11,9 +11,7 @@ import threading
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-
 from simple_rag.llm.rate_limiter import RateLimitedOllamaLLM
-
 
 # ---------------------------------------------------------------------------
 # Sync rate limiting

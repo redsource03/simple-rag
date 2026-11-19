@@ -12,8 +12,8 @@ project_root = Path(__file__).parent.parent.parent
 if str(project_root) not in sys.path:
     sys.path.insert(0, str(project_root))
 
-from simple_rag.mcp_server import create_mcp_server
 from simple_rag.config import AppConfig
+from simple_rag.mcp_server import create_mcp_server
 
 
 def main() -> None:

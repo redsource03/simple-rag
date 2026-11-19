@@ -13,7 +13,6 @@ from fastmcp import FastMCP
 
 from simple_rag.graph.pipeline import _get_kg_pipeline
 
-
 # The MCP server instance is injected by the caller (main.py or mcp_server.py).
 # This module is imported after the server is created so the decorator works.
 # We use a module-level variable that gets set by the server bootstrap.

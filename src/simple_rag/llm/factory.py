@@ -4,10 +4,8 @@ Returns the correct LLM/embedder instance based on ``ProviderConfig``.
 No provider branching in tool modules — tools receive a configured instance.
 """
 
-from typing import Any
-
-from neo4j_graphrag.llm import OpenAILLM
 from neo4j_graphrag.embeddings import OpenAIEmbeddings
+from neo4j_graphrag.llm import OpenAILLM
 
 from simple_rag.config import ProviderConfig
 from simple_rag.llm.rate_limiter import RateLimitedOllamaLLM

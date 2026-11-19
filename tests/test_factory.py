@@ -6,15 +6,12 @@ Covers:
 - Invalid provider raises ValueError
 """
 
-import asyncio
 import threading
 from unittest.mock import MagicMock, patch
 
 import pytest
-
 from simple_rag.config import ProviderConfig
 from simple_rag.llm import factory
-
 
 # ---------------------------------------------------------------------------
 # Helpers
