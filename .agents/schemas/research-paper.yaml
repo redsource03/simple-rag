@@ -1,0 +1,31 @@
+# Schema: Research Paper
+# Use for: academic papers, research reports, technical studies, literature reviews
+node_types:
+  - Paper
+  - Author
+  - Institution
+  - Concept
+  - Method
+  - Result
+  - Citation
+relationship_types:
+  - WRITES
+  - AFFILIATED_WITH
+  - PROPOSES
+  - USES
+  - MEASURES
+  - CITES
+  - CONTRADICTS
+  - EXTENDS
+patterns:
+  - [Author, WRITES, Paper]
+  - [Author, AFFILIATED_WITH, Institution]
+  - [Paper, PROPOSES, Concept]
+  - [Paper, USES, Method]
+  - [Paper, MEASURES, Result]
+  - [Paper, CITES, Paper]
+  - [Paper, CONTRADICTS, Paper]
+  - [Paper, EXTENDS, Paper]
+description: >
+  Schema for research papers. Models authors, institutions, concepts, methods,
+  and results, plus citation relationships between papers.

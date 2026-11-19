@@ -16,7 +16,7 @@ from neo4j_graphrag.indexes import create_vector_index
 from neo4j_graphrag.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
 from neo4j_graphrag.embeddings import OpenAIEmbeddings
 
-from rag_agent.config import Neo4jConfig, OllamaConfig
+from simple_rag.config import Neo4jConfig, OllamaConfig
 
 # Initialize FastMCP server
 mcp = FastMCP(

@@ -1,0 +1,19 @@
+{
+  "issueTracker": "github",
+  "repoUrl": "https://github.com/redsource03/simple-rag",
+  "triageLabels": {
+    "status": ["new", "triaged", "ready-for-agent", "in-progress", "done"],
+    "priority": ["critical", "high", "medium", "low"],
+    "special": ["blocked", "wayfinder:map", "wayfinder:research", "wayfinder:prototype", "wayfinder:grilling", "wayfinder:task"]
+  },
+  "domainDocs": {
+    "glossary": "GLOSSARY.md",
+    "adrs": "docs/adr/"
+  },
+  "scratchDir": ".scratch/",
+  "codebase": {
+    "structure": "monorepo",
+    "buildSystem": "poetry",
+    "testFramework": "pytest"
+  }
+}
