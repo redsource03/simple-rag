@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  neo4j:
+    image: neo4j:5.23.0
+    container_name: rag-agent-neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      NEO4J_AUTH: ${NEO4J_AUTH:-neo4j/password}
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4JLABS_PLUGINS: '["browser"]'
+    volumes:
+      - ./data/neo4j/data:/var/lib/neo4j/data
+      - ./data/neo4j/logs:/var/lib/neo4j/logs
+      - ./data/neo4j/import:/import
+    networks:
+      - rag-agent-network
+    healthcheck:
+      test: ["CMD-SHELL", "neo4j status"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    restart: unless-stopped
+
+
+
+networks:
+  rag-agent-network:
+    driver: bridge
