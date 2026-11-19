@@ -16,7 +16,7 @@ from neo4j_graphrag.indexes import create_vector_index
 from neo4j_graphrag.components.text_splitters.fixed_size_splitter import FixedSizeSplitter
 from neo4j_graphrag.embeddings import OpenAIEmbeddings
 
-from simple_rag.config import Neo4jConfig, OllamaConfig
+from simple_rag.config import Neo4jConfig, ProviderConfig
 
 # Initialize FastMCP server
 mcp = FastMCP(
@@ -56,7 +56,7 @@ def _ensure_vector_index() -> None:
     """
     driver = _get_driver()
     neo4j_config = Neo4jConfig.from_env()
-    ollama_config = OllamaConfig.from_env()
+    provider_config = ProviderConfig.from_env()
     
     # List of indexes to create
     indexes_to_create = [
@@ -86,7 +86,7 @@ def _ensure_vector_index() -> None:
                         index_name,
                         label=label,
                         embedding_property=embedding_property,
-                        dimensions=2560,
+                        dimensions=provider_config.embedding_dimension,
                         similarity_fn="euclidean",
                     )
                     print(f"Vector index '{index_name}' created successfully")
@@ -151,35 +151,34 @@ class RateLimitedOllamaLLM(OpenAILLM):
 
 
 def _get_ollama_llm() -> RateLimitedOllamaLLM:
-    ollama_config = OllamaConfig.from_env()
-    print(ollama_config)
+    provider_config = ProviderConfig.from_env()
 
     return RateLimitedOllamaLLM(
-        model_name=ollama_config.chat_model,
-        max_concurrent=ollama_config.max_concurrency,
-        base_url=ollama_config.host,
+        model_name=provider_config.llm_model,
+        max_concurrent=provider_config.ollama_max_concurrency,
+        base_url=provider_config.ollama_base_url,
         model_params={
-          "temperature": 0.0,
+          "temperature": provider_config.llm_temperature,
           "response_format": {"type": "json_object"},
           "reasoning_effort": "low",
           "extra_body": {
               "options": {
-                  "num_ctx": ollama_config.num_ctx,
+                  "num_ctx": provider_config.ollama_num_ctx,
               },
-              "keep_alive": ollama_config.num_keep_alive,
+              "keep_alive": provider_config.ollama_num_keep_alive,
           },
       },
         timeout=None,
-        api_key=ollama_config.api_key
+        api_key=provider_config.ollama_api_key
     )
 
 def _get_embedder():
-    ollama_config = OllamaConfig.from_env()
-    #embedder = OllamaEmbeddings(model=ollama_config.embedding_model, host="http://localhost:4000",headers={"Authorization": f"Bearer {ollama_config.api_key}"})
+    provider_config = ProviderConfig.from_env()
+    #embedder = OllamaEmbeddings(model=provider_config.embedding_model, host="http://localhost:4000",headers={"Authorization": f"Bearer {provider_config.api_key}"})
     embedder = OpenAIEmbeddings(
-        model=ollama_config.embedding_model,
-        base_url=ollama_config.host,
-        api_key=ollama_config.api_key
+        model=provider_config.embedding_model,
+        base_url=provider_config.embedding_base_url,
+        api_key=provider_config.embedding_api_key
     )
     return embedder
 def _get_kg_pipeline() -> SimpleKGPipeline:
@@ -187,14 +186,14 @@ def _get_kg_pipeline() -> SimpleKGPipeline:
     global _kg_pipeline
     if _kg_pipeline is None:
         neo4j_config = Neo4jConfig.from_env()
-        ollama_config = OllamaConfig.from_env()
+        provider_config = ProviderConfig.from_env()
         
         # Initialize LLM and Embedder
-        #embedder = OllamaEmbeddings(model=ollama_config.embedding_model)
+        #embedder = OllamaEmbeddings(model=provider_config.embedding_model)
         embedder = _get_embedder()
-        print(f"Initializing with host: {ollama_config.host}")
-        print(f"Embedding model: {ollama_config.embedding_model}")
-        print(f"Chat model: {ollama_config.chat_model}")
+        print(f"Initializing with host: {provider_config.ollama_base_url}")
+        print(f"Embedding model: {provider_config.embedding_model}")
+        print(f"Chat model: {provider_config.llm_model}")
         llm = _get_ollama_llm()
         
         # Define node types as per GraphRAG specification
@@ -335,8 +334,8 @@ async def graph_search(
     """
     try:
         driver = _get_driver()
-        ollama_config = OllamaConfig.from_env()
-        #embedder = OllamaEmbeddings(model=ollama_config.embedding_model)
+        provider_config = ProviderConfig.from_env()
+        #embedder = OllamaEmbeddings(model=provider_config.embedding_model)
         embedder = _get_embedder()
 
         # Clamp max_hops to prevent runaway multi-hop traversals
