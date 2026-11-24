@@ -1,0 +1,27 @@
+# Schema: Project Plan
+# Use for: project proposals, sprint plans, roadmaps, task breakdowns
+node_types:
+  - Project
+  - Milestone
+  - Task
+  - Deliverable
+  - Stakeholder
+  - Risk
+  - Constraint
+relationship_types:
+  - CONTAINS
+  - DEPENDS_ON
+  - PRODUCES
+  - ASSIGNED_TO
+  - THREATENS
+  - CONSTRAINT_ON
+patterns:
+  - [Project, CONTAINS, Milestone]
+  - [Milestone, CONTAINS, Task]
+  - [Task, PRODUCES, Deliverable]
+  - [Task, ASSIGNED_TO, Stakeholder]
+  - [Risk, THREATENS, Milestone]
+  - [Constraint, CONSTRAINT_ON, Task]
+description: >
+  Schema for project planning documents. Models projects, milestones, tasks,
+  deliverables, stakeholders, and risks with their relationships.

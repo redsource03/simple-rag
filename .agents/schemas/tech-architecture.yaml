@@ -1,0 +1,26 @@
+# Schema: Technical Architecture
+# Use for: system designs, architecture docs, technical specifications, API contracts
+node_types:
+  - System
+  - Component
+  - Interface
+  - Dependency
+  - Service
+  - Module
+relationship_types:
+  - DEPENDS_ON
+  - PROXIES_TO
+  - EXPOSES
+  - CONSUMES
+  - CONTAINS
+  - IMPLEMENTS
+patterns:
+  - [System, DEPENDS_ON, Component]
+  - [Component, PROXIES_TO, Interface]
+  - [Interface, EXPOSES, Service]
+  - [Service, CONSUMES, Interface]
+  - [System, CONTAINS, Module]
+  - [Module, IMPLEMENTS, Interface]
+description: >
+  Schema for technical architecture documents. Models how systems, components,
+  and services relate to each other through dependencies, interfaces, and containment.
